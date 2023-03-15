@@ -1,6 +1,6 @@
 ﻿public class Gen
 {
-    public string Value {get; private set;} = "";
+    public string Value {get; set;} = "";
     private List<bool> Exons = new List<bool>();
 
     public Gen(List<bool> list)
