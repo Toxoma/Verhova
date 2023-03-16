@@ -1,5 +1,7 @@
 ﻿public class Individual
 {
+    public double ruletkaMin {get; set;} = 0;
+    public double ruletkaMax {get; set;} = 0;
     public double mutationValue {get; set;} = 1;
     public Chromosome Chromosome {get; set;}
     public Individual(Chromosome chromosome)
