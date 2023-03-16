@@ -18,11 +18,55 @@
         return new List<Individual>(){this.Ruletka(mas), this.Ruletka(mas)};
     }
 
-    public void Crossingover()
+    public List<Individual> Crossingover()
     {
+        var mas = this.SelectPair();
 
+        Console.WriteLine("Crossingover");
+
+        Random random = new Random();
+        var start = random.Next(1, mas[0].GetExons().Length - 2);
+        var end = random.Next(start + 2, mas[0].GetExons().Length);
+        Console.WriteLine($"{start}/{end}");
+        var temp1 = mas[0].GetExons().Substring(start+1, end - start - 1);
+        var temp2 = mas[1].GetExons().Substring(start+1, end - start - 1);
+
+        foreach (var item in mas)
+        {
+            Console.WriteLine($"Old: {item.GetExons()}");
+        }
+
+        this.change(mas[0], temp2, start, end);
+        this.change(mas[1], temp1, start, end);
+
+        foreach (var item in mas)
+        {
+            Console.WriteLine($"New: {item.GetExons()}");
+        }
+        return mas;
     }
 
+    private void change(Individual individual, string part, int start, int end){
+        var str = individual.GetExons();
+        var newstr = "";
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (i>start && i<end)
+            {
+                newstr+=part;
+                i = end-1;
+            }else{
+                newstr+=str[i];
+            }
+        }
+        
+        var gens = individual.Chromosome.Gens;
+        var half = newstr.Length / gens.Count;
+        for (int i = 0; i < gens.Count; i++)
+        {
+            gens[i].SetValue(newstr.Substring(i*half, half));
+        }
+    }
 
     private Individual Ruletka(List<Individual> mas)
     {
