@@ -21,6 +21,17 @@
     public List<Individual> Crossingover()
     {
         var mas = this.SelectPair();
+        Console.WriteLine("Old population");
+        List<Individual> newPopulationList = new List<Individual>();
+        foreach (var item in this.Individuals)
+        {
+            Console.WriteLine(item.GetExons());
+            if (item.Equals(mas[0]) || item.Equals(mas[1]))
+            {
+                continue;
+            }
+            newPopulationList.Add(item);
+        }
 
         Console.WriteLine("Crossingover");
 
@@ -41,11 +52,24 @@
 
         foreach (var item in mas)
         {
+            item.Mutation();
+            newPopulationList.Add(item);
+        }
+
+        foreach (var item in mas)
+        {
             Console.WriteLine($"New: {item.GetExons()}");
         }
-        return mas;
-    }
 
+        Console.WriteLine("New population");
+        foreach (var item in newPopulationList)
+        {
+            Console.WriteLine(item.GetExons());
+        }
+        Console.WriteLine("Insert");
+        return newPopulationList;
+    }
+ 
     private void change(Individual individual, string part, int start, int end){
         var str = individual.GetExons();
         var newstr = "";
