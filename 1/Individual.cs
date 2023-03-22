@@ -20,7 +20,7 @@
     }
 
     public double Fitness(){
-        return Math.Pow(Convert.ToInt32(this.GetExons(), 2), 2);
+        return Math.Pow(Convert.ToInt64(this.GetExons(), 2), 2);
     }
 
     public string GetExons(){
